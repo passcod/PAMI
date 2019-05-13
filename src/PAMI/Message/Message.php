@@ -138,6 +138,10 @@ abstract class Message
         if (!isset($value) || $value === null || strlen($value) == 0) {
             return null;
         } elseif (is_numeric($value)) {
+            if (($value[0] ?? null) === '0') {
+                // Return as string if there's a leading zero to avoid losing information
+                return $value;
+            }
             if (filter_var($value, FILTER_VALIDATE_INT, FILTER_FLAG_ALLOW_HEX | FILTER_FLAG_ALLOW_OCTAL)) {
                 return intval($value, 0);
             }
