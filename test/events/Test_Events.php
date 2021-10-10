@@ -139,7 +139,7 @@ namespace PAMI\Client\Impl {
                 'NewAccountCode',
                 'NewCallerid',
                 'Newchannel',
-                'Newexten',
+                'NewExten',
                 'Newstate',
                 'OriginateResponse',
                 'OutboundRegistrationDetail',
@@ -581,9 +581,10 @@ namespace PAMI\Client\Impl {
                 'Channel' => 'Channel',
                 'Context' => 'Context',
                 'Exten' => 'Exten',
-                'Privilege' => 'Privilege'
+                'Privilege' => 'Privilege',
+                'LinkedId' => 'LinkedId',
             ),
-            'Newexten' => array(
+            'NewExten' => array(
                 'Channel' => 'Channel',
                 'Privilege' => 'Privilege',
                 'AppData' => 'AppData',
@@ -592,7 +593,7 @@ namespace PAMI\Client\Impl {
                 'Extension' => 'Extension',
                 'Exten' => 'Exten',
                 'Context' => 'Context',
-                'UniqueID' => 'UniqueID',
+                'UniqueID' => 'UniqueID'
             ),
             'Newstate' => array(
                 'CallerIdName' => 'CallerIdName',
@@ -603,7 +604,8 @@ namespace PAMI\Client\Impl {
                 'Channel' => 'Channel',
                 'Privilege' => 'Privilege',
                 'ConnectedLineNum' => 'ConnectedLineNum',
-                'ConnectedLineName' => 'ConnectedLineName'
+                'ConnectedLineName' => 'ConnectedLineName',
+                'Exten' => 'Exten'
             ),
             'OriginateResponse' => array(
                 'CallerIdName' => 'CallerIdName',
@@ -2069,7 +2071,7 @@ namespace PAMI\Client\Impl {
                 'CID-CallingPres' => 'CallerIdPres'
             ),
             'Newchannel' => array('Exten' => 'Extension'),
-            'Newexten' => array(
+            'NewExten' => array(
                 'AppData' => 'ApplicationData',
             ),
             'QueueMemberStatus' => array(

@@ -112,7 +112,7 @@ class ClientImpl implements IClient
     private $responseFactory;
 
     /**
-     * R/W timeout, in milliseconds.
+     * R/W timeout, in seconds.
      * @var integer
      */
     private $rTimeout;
@@ -328,7 +328,11 @@ class ClientImpl implements IClient
             } elseif ($evePos !== false) {
                 $event = $this->messageToEvent($aMsg);
                 $response = $this->findResponse($event);
-                if ($response === false || $response->isComplete()) {
+                if (gettype($response) == "boolean" && $response === false) {
+                    $this->dispatch($event);
+                } elseif (!($response instanceof Response)) {
+                    $this->dispatch($event);
+                } elseif ($response->isComplete()) {
                     $this->dispatch($event);
                 } else {
                     $response->addEvent($event);
@@ -340,7 +344,9 @@ class ClientImpl implements IClient
                 $bMsg .= 'ActionId: ' . $this->lastActionId . "\r\n" . $aMsg;
                 $event = $this->messageToEvent($bMsg);
                 $response = $this->findResponse($event);
-                $response->addEvent($event);
+                if ($response instanceof Response) {
+                    $response->addEvent($event);
+                }
             }
             $this->logger->debug('----------------');
         }

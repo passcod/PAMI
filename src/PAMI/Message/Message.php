@@ -79,11 +79,11 @@ abstract class Message
     protected $createdDate;
 
     /**
-     * Serialize function.
+     * Serialize helper function.
      *
      * @return string[]
      */
-    public function __sleep()
+    protected function __sleep()
     {
         return array('lines', 'variables', 'keys', 'createdDate');
     }
@@ -138,8 +138,9 @@ abstract class Message
         if (!isset($value) || $value === null || strlen($value) == 0) {
             return null;
         } elseif (is_numeric($value)) {
-            if (($value[0] ?? null) === '0') {
-                // Return as string if there's a leading zero to avoid losing information
+            // index access is safe as is_numeric('') === false
+            if ($value[0] === '0' || $value[0] === '+') {
+                // Return as string if there's a leading zero or plus sign to avoid losing information
                 return $value;
             }
             if (filter_var($value, FILTER_VALIDATE_INT, FILTER_FLAG_ALLOW_HEX | FILTER_FLAG_ALLOW_OCTAL)) {
@@ -195,8 +196,8 @@ abstract class Message
     protected function setSanitizedKey($key, $value)
     {
         $key = strtolower((string)$key);
-        if ($key === 'actionid') {
-            $this->keys[$key] = (string)$this->sanitizeInput($value);
+        if ($key === 'actionid' or $key === 'uniqueid' or $key === 'linkedid') {
+            $this->keys[$key] = $value;
         } else {
             $this->keys[$key] = $this->sanitizeInput($value);
         }
